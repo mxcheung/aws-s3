@@ -23,21 +23,22 @@ export class S3CdkStack extends cdk.Stack {
 //      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 //    });
 
-    // Create an S3 bucket with Intelligent-Tiering storage class
-      const s3Bucket = new s3.Bucket(this, 'MyS3Bucket', {
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // This is just an example, adjust according to your needs
-      autoDeleteObjects: true, // This is just an example, adjust according to your needs
-      versioned: true, // Enable versioning for the bucket (optional)
-      lifecycleRules: [
-        {
+    // create lifecycle rule
+      const lifecycle_rule_intelligent =   
+       {
           transitions: [
             {
               storageClass: s3.StorageClass.INTELLIGENT_TIERING,
               transitionAfter: cdk.Duration.days(30), // Adjust the transitionAfter value as needed
             },
           ],
-        },
-      ],
+        }
+    // Create an S3 bucket with Intelligent-Tiering storage class
+      const s3Bucket = new s3.Bucket(this, 'MyS3Bucket', {
+      removalPolicy: cdk.RemovalPolicy.DESTROY, // This is just an example, adjust according to your needs
+      autoDeleteObjects: true, // This is just an example, adjust according to your needs
+      versioned: true, // Enable versioning for the bucket (optional)
+      lifecycleRules: [ lifecycle_rule_intelligent ],
     });
     
   }
