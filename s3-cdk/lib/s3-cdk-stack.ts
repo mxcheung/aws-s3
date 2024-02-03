@@ -1,11 +1,21 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as s3 from '@aws-cdk/aws-s3';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
+import { RemovalPolicy, Stack, StackProps, Duration } from 'aws-cdk-lib';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class S3CdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+    
+         //define dynamodb table
+    const table = new dynamodb.Table(this, id, {
+      partitionKey: { name: "fort_id", type: dynamodb.AttributeType.NUMBER },
+      removalPolicy: RemovalPolicy.DESTROY,
+      tableName: "fortunes"
+      }
+    )
 
     // The code that defines your stack goes here
 
@@ -15,6 +25,10 @@ export class S3CdkStack extends cdk.Stack {
     // });
 
     // Create an S3 bucket
-    new s3.Bucket(this, 'MyS3Bucket');
+    const s3Bucket = new s3.Bucket(this, 'exampleBucket', {
+      objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+    });
+
   }
 }
