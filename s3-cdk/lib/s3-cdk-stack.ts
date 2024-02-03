@@ -9,13 +9,6 @@ export class S3CdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     
-         //define dynamodb table
-    const table = new dynamodb.Table(this, id, {
-      partitionKey: { name: "fort_id", type: dynamodb.AttributeType.NUMBER },
-      removalPolicy: RemovalPolicy.DESTROY,
-      tableName: "fortunes-s3"
-      }
-    )
 
     // The code that defines your stack goes here
 
