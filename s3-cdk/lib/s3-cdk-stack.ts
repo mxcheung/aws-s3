@@ -13,7 +13,7 @@ export class S3CdkStack extends cdk.Stack {
     const table = new dynamodb.Table(this, id, {
       partitionKey: { name: "fort_id", type: dynamodb.AttributeType.NUMBER },
       removalPolicy: RemovalPolicy.DESTROY,
-      tableName: "fortunes"
+      tableName: "fortunes-s3"
       }
     )
 
