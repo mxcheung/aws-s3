@@ -40,7 +40,8 @@ X-Ray
 # step 1 - quickstart
 
 ```
-git clone https://github.com/mxcheung/fortune-cookies.git
+git clone https://github.com/mxcheung/aws-s3.git
+https://github.com/mxcheung/aws-s3.git
 cd /home/ec2-user/environment/fortune-cookies/fortunes-cdk
 . ./install.sh
 
