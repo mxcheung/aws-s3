@@ -39,9 +39,18 @@ export class S3CdkStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY, // This is just an example, adjust according to your needs
       autoDeleteObjects: true, // This is just an example, adjust according to your needs
       versioned: true, // Enable versioning for the bucket (optional)
+      publicReadAccess: true,
+      websiteIndexDocument: 'index.html',
       lifecycleRules: [ lifecycle_rule_intelligent ],
     });
 
+    // Grant public read access to the bucket
+    s3Bucket.addToResourcePolicy(new iam.PolicyStatement({
+      actions: ['s3:GetObject'],
+      resources: [`${myBucket.bucketArn}/*`],
+      principals: [new iam.AnyPrincipal()],
+    }));
+    
     // Deploy files to the bucket
     new s3deploy.BucketDeployment(this, 'DeployFiles', {
       sources: [s3deploy.Source.asset('./data-folder')],
