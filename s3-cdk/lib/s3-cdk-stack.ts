@@ -40,6 +40,12 @@ export class S3CdkStack extends cdk.Stack {
       versioned: true, // Enable versioning for the bucket (optional)
       lifecycleRules: [ lifecycle_rule_intelligent ],
     });
+
+    // Deploy files to the bucket
+    new s3deploy.BucketDeployment(this, 'DeployFiles', {
+      sources: [s3deploy.Source.asset('./data-folder')],
+      destinationBucket: myBucket,
+    });
     
   }
 }
