@@ -4,6 +4,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
 import { RemovalPolicy, Stack, StackProps, Duration } from 'aws-cdk-lib';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
+import * as iam from 'aws-cdk-lib/aws-iam';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class S3CdkStack extends cdk.Stack {
@@ -47,7 +48,7 @@ export class S3CdkStack extends cdk.Stack {
     // Grant public read access to the bucket
     s3Bucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
-      resources: [`${myBucket.bucketArn}/*`],
+      resources: [`${s3Bucket.bucketArn}/*`],
       principals: [new iam.AnyPrincipal()],
     }));
     
