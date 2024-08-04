@@ -39,6 +39,10 @@ export class S3CdkStack extends cdk.Stack {
       sources: [s3deploy.Source.asset('./data-folder')],
       destinationBucket: s3Bucket,
     });
-    
+
+    // Add tags to the bucket
+    cdk.Tags.of(myBucket).add('Environment', 'Production');
+    cdk.Tags.of(myBucket).add('Department', 'Marketing');    
+
   }
 }
