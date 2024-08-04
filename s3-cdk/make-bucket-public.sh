@@ -43,3 +43,5 @@ aws s3api put-public-access-block --bucket "$bucket_name" --public-access-block-
 aws s3 cp /home/ec2-user/environment/aws-codebuild/multi-repo/s3_repo/data-folder/index.html s3://$bucket_name/
 
 echo "Bucket $bucket_name is now public."
+
+echo "https://$bucket_name.s3.amazonaws.com/index.html"
