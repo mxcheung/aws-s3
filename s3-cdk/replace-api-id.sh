@@ -2,7 +2,7 @@
 
 # Variables
 TAG_KEY="Project"
-TAG_VALUE="MyProject"
+TAG_VALUE="Cookies"
 PLACEHOLDER="{API_ID}"
 HTML_FILE="data-folder/index.html"
 
