@@ -42,7 +42,7 @@ export class S3CdkStack extends cdk.Stack {
 
     // Add tags to the bucket
     cdk.Tags.of(myBucket).add('Environment', 'Production');
-    cdk.Tags.of(myBucket).add('Department', 'Marketing');    
-
+    cdk.Tags.of(myBucket).add('Department', 'Marketing');
+    cdk.Tags.of(myBucket).add('Project', 'Cookies');    
   }
 }
