@@ -41,4 +41,6 @@ aws s3api put-bucket-policy --bucket "$bucket_name" --policy "$bucket_policy"
 # Update public access settings
 aws s3api put-public-access-block --bucket "$bucket_name" --public-access-block-configuration BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false
 
+aws s3 cp /home/ec2-user/environment/aws-codebuild/multi-repo/s3_repo/data-folder/index.html s3://$bucket_name/
+
 echo "Bucket $bucket_name is now public."
