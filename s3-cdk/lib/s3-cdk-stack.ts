@@ -41,8 +41,8 @@ export class S3CdkStack extends cdk.Stack {
     });
 
     // Add tags to the bucket
-    cdk.Tags.of(myBucket).add('Environment', 'Production');
-    cdk.Tags.of(myBucket).add('Department', 'Marketing');
-    cdk.Tags.of(myBucket).add('Project', 'Cookies');    
+    cdk.Tags.of(s3Bucket).add('Environment', 'Production');
+    cdk.Tags.of(s3Bucket).add('Department', 'Marketing');
+    cdk.Tags.of(s3Bucket).add('Project', 'Cookies');    
   }
 }
