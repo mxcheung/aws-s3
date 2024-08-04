@@ -7,16 +7,15 @@
 for bucket in $(aws s3api list-buckets --query "Buckets[].Name" --output text)
 do
   # Get the tags for the current bucket
-  tags=$(aws s3api get-bucket-tagging --bucket $bucket --query "TagSet[?Key=='Department' && Value=='Marketing']" --output json)
+  tags=$(aws s3api get-bucket-tagging --bucket $bucket --query "TagSet[?Key=='Project' && Value=='Cookies']" --output json)
 
   # Check if the tags array is not empty
   if [ "$(echo "$tags" | jq length)" -gt 0 ]; then
     bucket_name=$bucket 
-    echo "Bucket with Department=Marketing: $bucket"
+    echo "Bucket with Project=Cookies: $bucket"
   fi
 done
 echo $bucket_name
-
 
 # Create a bucket policy JSON content
 bucket_policy=$(cat <<EOF
