@@ -1,35 +1,28 @@
 #!/bin/bash
 
 # Set variables
-BUCKET_NAME="your-bucket-name"
+# BUCKET_NAME="your-bucket-name"
 INDEX_FILE="index.html"
 UNIQUE_STRING=$(date +%s)
 
-# Create S3 bucket
-aws s3 mb s3://$BUCKET_NAME
 
-# Upload index.html to S3 bucket
-aws s3 cp $INDEX_FILE s3://$BUCKET_NAME/
+# Define the bucket name
+# bucket_name="your-bucket-name"
 
-# Make index.html publicly accessible
-aws s3api put-object-acl --bucket $BUCKET_NAME --key $INDEX_FILE --acl public-read
+# Iterate over each bucket
+for bucket in $(aws s3api list-buckets --query "Buckets[].Name" --output text)
+do
+  # Get the tags for the current bucket
+  tags=$(aws s3api get-bucket-tagging --bucket $bucket --query "TagSet[?Key=='Project' && Value=='Cookies']" --output json)
 
-# Enable static website hosting on S3 bucket
-aws s3 website s3://$BUCKET_NAME/ --index-document $INDEX_FILE
+  # Check if the tags array is not empty
+  if [ "$(echo "$tags" | jq length)" -gt 0 ]; then
+    BUCKET_NAME=$bucket 
+    echo "Bucket with Project=Cookies: $bucket"
+  fi
+done
+echo $BUCKET_NAME
 
-# Set bucket policy to allow public read access
-aws s3api put-bucket-policy --bucket $BUCKET_NAME --policy '{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::'$BUCKET_NAME'/*"
-        }
-    ]
-}'
 
 # Create CloudFront distribution configuration
 cat > cloudfront-config.json <<EOL
