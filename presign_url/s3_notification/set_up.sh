@@ -9,4 +9,11 @@ AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 
 aws s3api put-bucket-notification-configuration \
   --bucket $S3_BUCKET_NAME \
-  --notification-configuration file://notification.json
+  --notification-configuration "$(jq -n --arg lambda_arn "arn:aws:lambda:$REGION:$AWS_ACCOUNT_ID:function:S3TriggerLambda" '{
+    "LambdaFunctionConfigurations": [
+      {
+        "LambdaFunctionArn": $lambda_arn,
+        "Events": ["s3:ObjectCreated:*"]
+      }
+    ]
+  }')"
