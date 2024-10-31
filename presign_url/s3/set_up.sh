@@ -1,5 +1,7 @@
+#!/bin/bash
 
 
+export S3_BUCKET_NAME="S3TriggerLambdaBucketQaisar"
 
 aws s3api create-bucket \
-  --bucket your-unique-bucket-name 
+  --bucket $LAMBDA_ROLE_NAME 
