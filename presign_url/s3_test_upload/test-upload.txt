@@ -1,0 +1,5 @@
+Hello, S3!
+This is a test file to trigger the Lambda function via S3 event notifications.
+Date: $(date)
+
+Thank you for using AWS!
