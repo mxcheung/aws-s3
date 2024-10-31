@@ -20,10 +20,13 @@ aws iam wait role-exists --role-name $LAMBDA_ROLE_NAME
 
 export LAMBDA_ROLE_ARN=$(aws iam get-role --role-name $LAMBDA_ROLE_NAME --query 'Role.Arn' --output text)
 
-aws lambda create-function \
+S3_TRIGGER_LAMBDA_OUTPUT=$(aws lambda create-function \
     --function-name $LAMBDA_FUNCTION_NAME \
     --zip-file fileb://function.zip \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
     --role $LAMBDA_ROLE_ARN \
-    --environment Variables="{BUCKET_NAME=$S3_BUCKET_NAME}"
+    --environment Variables="{BUCKET_NAME=$S3_BUCKET_NAME}")
+
+echo $S3_TRIGGER_LAMBDA_OUTPUT
+
