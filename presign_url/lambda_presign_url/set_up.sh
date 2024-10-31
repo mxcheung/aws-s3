@@ -4,7 +4,7 @@ export LAMBDA_FUNCTION_NAME="S3PresignURLLambda"
 export LAMBDA_ROLE_NAME="LambdaS3ExecutionRole"
 
 # Variables
-BASE_BUCKET_NAME="s3triggerlambdabucket"
+BASE_BUCKET_NAME="s3triggerlambdabucketqaisar"
 REGION="us-east-1"                                  # Replace with your AWS region
 
 # Get the existing S3 bucket name based on the base name
