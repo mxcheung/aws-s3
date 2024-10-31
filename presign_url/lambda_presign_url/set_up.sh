@@ -28,3 +28,4 @@ aws lambda create-function \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
     --role $LAMBDA_ROLE_ARN \
+    --environment Variables="{BUCKET_NAME=$S3_BUCKET_NAME}"
