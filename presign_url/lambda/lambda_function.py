@@ -1,28 +1,37 @@
-import boto3
 import json
-from datetime import datetime, timedelta
+import boto3
 
-# Initialize the S3 client
-s3_client = boto3.client('s3')
+def lambda_handler(event, context):
+    # Initialize the S3 client
+    s3_client = boto3.client('s3')
 
-# Specify your parameters
-bucket_name = 'your-unique-bucket-name'
-object_key = 'test-upload.txt'
-user_id = '12345'
-username = 'exampleUser'
-expiration = 3600  # 1 hour
+    # Loop through each record in the event
+    for record in event['Records']:
+        # Get the bucket name and object key from the event
+        bucket_name = record['s3']['bucket']['name']
+        object_key = record['s3']['object']['key']
 
-# Generate a presigned URL for uploading the object with metadata
-presigned_url = s3_client.generate_presigned_url('put_object',
-    Params={
-        'Bucket': bucket_name,
-        'Key': object_key,
-        'Metadata': {
-            'user_id': user_id,
-            'username': username
-        }
-    },
-    ExpiresIn=expiration
-)
+        try:
+            # Get the object from S3
+            response = s3_client.get_object(Bucket=bucket_name, Key=object_key)
 
-print(f'Presigned URL: {presigned_url}')
+            # Read the contents of the file
+            file_contents = response['Body'].read().decode('utf-8')
+
+            # Retrieve user metadata
+            user_id = response['Metadata'].get('user_id')
+            username = response['Metadata'].get('username')
+
+            # Print the file contents and user credentials to CloudWatch Logs
+            print(f'Contents of the file {object_key} in bucket {bucket_name}:')
+            print(file_contents)
+            print(f'User ID: {user_id}')
+            print(f'Username: {username}')
+
+        except Exception as e:
+            print(f'Error retrieving object {object_key} from bucket {bucket_name}. Error: {str(e)}')
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Lambda function executed successfully!')
+    }
