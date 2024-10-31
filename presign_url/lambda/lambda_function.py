@@ -14,14 +14,20 @@ def lambda_handler(event, context):
         try:
             # Get the object from S3
             response = s3_client.get_object(Bucket=bucket_name, Key=object_key)
-            
+
             # Read the contents of the file
             file_contents = response['Body'].read().decode('utf-8')
-            
-            # Print the file contents to CloudWatch Logs
+
+            # Retrieve user metadata
+            user_id = response['Metadata'].get('user_id')
+            username = response['Metadata'].get('username')
+
+            # Print the file contents and user credentials to CloudWatch Logs
             print(f'Contents of the file {object_key} in bucket {bucket_name}:')
             print(file_contents)
-            
+            print(f'User ID: {user_id}')
+            print(f'Username: {username}')
+
         except Exception as e:
             print(f'Error retrieving object {object_key} from bucket {bucket_name}. Error: {str(e)}')
 
