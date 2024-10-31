@@ -1,12 +1,7 @@
 #!/bin/bash
 
-export TABLE_NAME="ExpiringRecordsTable"
-export INDEX_NAME="ExpiryIndex"
-export SNS_TOPIC_NAME="ExpiryAlertTopic"
-export LAMBDA_FUNCTION_NAME="CheckExpiredRecordsFunction"
-export LAMBDA_ROLE_NAME="LambdaDynamoDBAccessRole"
-export EXPIRY_THRESHOLD=100  # Set your threshold value here
-
+export LAMBDA_FUNCTION_NAME="S3TriggerLambda"
+export LAMBDA_ROLE_NAME="LambdaS3ExecutionRole"
 
 aws iam create-role \
     --role-name  $LAMBDA_ROLE_NAME \
@@ -17,7 +12,5 @@ aws iam wait role-exists --role-name $LAMBDA_ROLE_NAME
 
 
 aws iam attach-role-policy --role-name $LAMBDA_ROLE_NAME --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-aws iam attach-role-policy --role-name $LAMBDA_ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
-aws iam attach-role-policy --role-name $LAMBDA_ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonSNSFullAccess
-
+aws iam attach-role-policy --role-name $LAMBDA_ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
     
