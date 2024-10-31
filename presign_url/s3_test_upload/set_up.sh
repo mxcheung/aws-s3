@@ -20,7 +20,7 @@ PRESIGNED_URL=$(aws lambda invoke \
     --function-name $LAMBDA_FUNCTION_NAME \
     --payload "{\"object_key\":\"$OBJECT_KEY\", \"user_id\":\"$USER_ID\", \"username\":\"$USERNAME\"}" \
     --region $REGION \
-    response.json
+    response.json)
 
 # Read the presigned URL from the response
 PRESIGNED_URL=$(jq -r '.presigned_url' response.json)
