@@ -21,13 +21,17 @@ def lambda_handler(event, context):
             # Retrieve user metadata
             user_id = response['Metadata'].get('user_id')
             username = response['Metadata'].get('username')
+            max_file_size = response['Metadata'].get('max_file_size')
+            md5_hash = response['Metadata'].get('md5_hash')
 
             # Print the file contents and user credentials to CloudWatch Logs
             print(f'Contents of the file {object_key} in bucket {bucket_name}:')
             print(file_contents)
             print(f'User ID: {user_id}')
             print(f'Username: {username}')
-
+            print(f'Max File Size: {max_file_size}')
+            print(f'MD5 Hash: {md5_hash}')
+        
         except Exception as e:
             print(f'Error retrieving object {object_key} from bucket {bucket_name}. Error: {str(e)}')
 
