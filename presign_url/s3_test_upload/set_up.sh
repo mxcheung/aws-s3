@@ -17,14 +17,18 @@ REGION=$(aws configure get region)
 
 # aws s3 cp ./test-upload.txt s3://$S3_BUCKET_NAME/
 
-
 # Variables
 OBJECT_KEY="test-upload.txt"                        # The object key (filename) in S3
 USER_ID="12345"                                     # User ID metadata
 USERNAME="exampleUser"                              # Username metadata
 REGION="us-east-1"                                  # Replace with your AWS region
+FILE_PATH="test-upload.txt"
+MAX_FILE_SIZE=10485760  # 10 MB in bytes
+MD5_HASH=$(openssl dgst -md5 -binary "$FILE_PATH" | base64)
 
-# Invoke the Lambda function to get the presigned URL
+
+PAYLOAD="{\"object_key\": \"$OBJECT_KEY\", \"max_file_size\": \"$MAX_FILE_SIZE\", \"md5_hash\": \"$MD5_HASH\", \"user_id\": \"$USER_ID\", \"username\": \"$USERNAME\"}"
+echo $PAYLOAD > invoke-payload.json
 
 # Invoke the Lambda function to get the presigned URL
 RESPONSE=$(aws lambda invoke \
