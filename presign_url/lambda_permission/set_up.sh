@@ -9,7 +9,10 @@ AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 aws lambda add-permission \
   --function-name $LAMBDA_FUNCTION_NAME \
   --principal s3.amazonaws.com \
-  --statement-id AllowS3Invoke \
+  --statement-id s3invoke \
   --action "lambda:InvokeFunction" \
   --source-arn arn:aws:s3:::$S3_BUCKET_NAME \
   --source-account $AWS_ACCOUNT_ID
+
+
+
