@@ -16,14 +16,17 @@ USERNAME="exampleUser"                              # Username metadata
 REGION="us-east-1"                                  # Replace with your AWS region
 
 # Invoke the Lambda function to get the presigned URL
-PRESIGNED_URL=$(aws lambda invoke \
+
+# Invoke the Lambda function to get the presigned URL
+RESPONSE=$(aws lambda invoke \
     --function-name $LAMBDA_FUNCTION_NAME \
-    --payload "{\"object_key\":\"$OBJECT_KEY\", \"user_id\":\"$USER_ID\", \"username\":\"$USERNAME\"}" \
+    --payload fileb://invoke-payload.json \
     --region $REGION \
     response.json)
 
-# Read the presigned URL from the response
-PRESIGNED_URL=$(jq -r '.presigned_url' response.json)
+
+# Extract the body from the response and then the presigned URL
+PRESIGNED_URL=$(jq -r '.body | fromjson | .presigned_url' response.json)
 
 # Print the presigned URL
 echo "Presigned URL: $PRESIGNED_URL"
