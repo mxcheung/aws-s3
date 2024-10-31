@@ -15,4 +15,6 @@ cd /home/ec2-user/aws-s3/presign_url/lambda
 cd /home/ec2-user/aws-s3/presign_url/lambda_permission
 . ./set_up.sh
 
+cd /home/ec2-user/aws-s3/presign_url/s3_notification
+. ./set_up.sh
 
