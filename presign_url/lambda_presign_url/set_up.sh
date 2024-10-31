@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export S3_BUCKET_NAME="s3triggerlambdabucketqaisar"
 export LAMBDA_FUNCTION_NAME="S3PresignURLLambda"
 export LAMBDA_ROLE_NAME="LambdaS3ExecutionRole"
 
