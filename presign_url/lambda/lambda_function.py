@@ -25,7 +25,7 @@ def lambda_handler(event, context):
             user_id = response['Metadata'].get('user_id')
             username = response['Metadata'].get('username')
             max_file_size = response['Metadata'].get('max_file_size')
-            md5_hash = response['Metadata'].get('md5_hash')
+            original_md5 = response['Metadata'].get('md5_hash')
 
             # Print the file contents and user credentials to CloudWatch Logs
             print(f'Contents of the file {object_key} in bucket {bucket_name}:')
@@ -33,17 +33,29 @@ def lambda_handler(event, context):
             print(f'User ID: {user_id}')
             print(f'Username: {username}')
             print(f'Max File Size: {max_file_size}')
-            print(f'MD5 Hash: {md5_hash}')
+            print(f'Original MD5 Hash: {original_md5}')
 
             # Calculate MD5 hash of the UTF-8 string
             calculated_md5 = base64.b64encode(hashlib.md5(file_contents.encode('utf-8')).digest()).decode('utf-8')
             print(f'Calculated MD5 Hash: {calculated_md5}')
 
-        
         except Exception as e:
             print(f'Error retrieving object {object_key} from bucket {bucket_name}. Error: {str(e)}')
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Lambda function executed successfully!')
-    }
+
+
+    # Compare calculated MD5 with the original MD5 from metadata
+    if calculated_md5 == original_md5:
+        print(f"MD5 hash match for {object_key} in {bucket_name}")
+        return {
+            "statusCode": 200,
+            "body": json.dumps({"message": "File integrity verified successfully"})
+        }
+    else:
+        print(f"MD5 hash mismatch for {object_key} in {bucket_name}")
+        # Optionally, delete or flag the file if it fails the integrity check
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"error": "MD5 hash mismatch"})
+        }
+
