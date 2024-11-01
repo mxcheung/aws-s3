@@ -1,5 +1,8 @@
 import json
 import boto3
+import base64
+import hashlib
+from botocore.exceptions import ClientError
 
 def lambda_handler(event, context):
     # Initialize the S3 client
@@ -31,6 +34,11 @@ def lambda_handler(event, context):
             print(f'Username: {username}')
             print(f'Max File Size: {max_file_size}')
             print(f'MD5 Hash: {md5_hash}')
+
+            # Calculate MD5 hash of the UTF-8 string
+            calculated_md5 = base64.b64encode(hashlib.md5(file_contents.encode('utf-8')).digest()).decode('utf-8')
+            print(f'Calculated MD5 Hash: {calculated_md5}')
+
         
         except Exception as e:
             print(f'Error retrieving object {object_key} from bucket {bucket_name}. Error: {str(e)}')
