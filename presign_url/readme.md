@@ -57,3 +57,19 @@ Presigned URL: https://s3triggerlambdabucketqaisar20241031054326.s3.amazonaws.co
 File uploaded successfully!
 [ec2-user@ip-172-31-41-118 s3_test_upload]$ exi
 ```
+
+```
+2024-11-01T06:05:46.320Z User ID: 12345
+2024-11-01T06:05:46.320Z Username: exampleUser
+2024-11-01T06:05:46.320Z Max File Size: 10485760
+2024-11-01T06:05:46.320Z Original MD5 Hash: /y7uw//R72/ErOEPC1Fo8Q==
+Original MD5 Hash: /y7uw//R72/ErOEPC1Fo8Q==
+2024-11-01T06:05:46.320Z Calculated MD5 Hash: /y7uw//R72/ErOEPC1Fo8Q==
+2024-11-01T06:05:46.320Z
+Original MD5 Hash: /y7uw//R72/ErOEPC1Fo8Q==
+2024-11-01T06:05:46.320Z
+Calculated MD5 Hash: /y7uw//R72/ErOEPC1Fo8Q==
+2024-11-01T06:05:46.320Z MD5 hash match for test-upload.txt in s3triggerlambdabucketqaisar20241101060518
+2024-11-01T06:05:46.322Z END RequestId: 4136466b-adcf-498f-a964-d1d8f30ff422
+2024-11-01T06:05:46.323Z REPORT RequestId: 4136466b-adcf-498f-a964-d1d8f30ff422 Duration: 2827.05 ms Billed Duration: 2828 ms Memory Size: 128 MB Max Memory Used: 81 MB Init Duration: 297.42 ms
+```
